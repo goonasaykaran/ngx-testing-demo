@@ -1,21 +1,23 @@
 export class E2eDemoPage {
-  sleep(time: number = 500) {
-    return browser.sleep(time)
+  async sleep(time: number = 500) {
+    return await browser.sleep(time)
   }
 
   async navigateTo() {
-    browser.get('/');
-    return this.sleep(1000);
+    return await browser.get('/');
   }
 
-  getParagraphText() {
-    return element(by.css('my-app > h1')).getText();
+  async getParagraphText() {
+    return await element(by.css('my-app h3')).getText();
   }
 
-  async getHero() {
-    this.sleep(1750);
-    await browser.driver.findElements(by.id('Narco'));
-    return element(by.id('Narco')).click();
+  async getElementText(selector: string) {
+    return await element(by.css(selector)).getText();
+  }
+
+  async getHero(id: string) {
+    await browser.driver.findElements(by.id(id));
+    return await element(by.id(id)).click();
   }
 
 }
