@@ -30,6 +30,8 @@
   },
   "devDependencies": {
     "@types/jasmine": "^2.2.30",
+    "@types/protractor": "^1.5.20",
+    "@types/selenium-webdriver": "2.44.29",
     "angular-cli": "1.0.0-beta.16",
     "codelyzer": "~0.0.26",
     "jasmine-core": "2.4.1",
