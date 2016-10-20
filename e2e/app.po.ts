@@ -1,7 +1,4 @@
 export class E2eDemoPage {
-  async sleep(time: number = 500) {
-    return await browser.sleep(time)
-  }
 
   async navigateTo() {
     return await browser.get('/');
