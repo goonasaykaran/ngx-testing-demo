@@ -1,6 +1,6 @@
 import { E2eDemoPage } from './app.po';
 
-describe('e2e-demo App', ()=> {
+describe('e2e-demo App', () => {
   let page: E2eDemoPage;
 
   beforeEach(async() => {
@@ -12,7 +12,7 @@ describe('e2e-demo App', ()=> {
     expect(page.getParagraphText()).toEqual('Top Heroes');
   });
 
-  describe('navigation events', async()=> {
+  describe('navigation events', async() => {
     const hero = 'Narco';
     const heroSelector = 'my-hero-detail h2';
     const backSelector = 'back';
@@ -25,7 +25,7 @@ describe('e2e-demo App', ()=> {
       expect(elementText).toBe(`${hero} details!`);
     });
 
-    it('should navigate back to dashboard when back is clicked', async()=> {
+    it('should navigate back to dashboard when back is clicked', async() => {
       await browser.driver.findElements(by.id(backSelector));
       await element(by.id(backSelector)).click();
       expect(page.getParagraphText()).toEqual('Top Heroes');
