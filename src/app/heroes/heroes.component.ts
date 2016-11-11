@@ -16,8 +16,8 @@ export class HeroesComponent implements OnInit {
   error: any;
 
   constructor(
-    private router: Router,
-    private heroService: HeroService) { }
+    private heroService: HeroService,
+    private router: Router) { }
 
   getHeroes(): void {
     this.heroService
