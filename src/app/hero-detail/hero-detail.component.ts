@@ -1,13 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-
 import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
 
 @Component({
   selector: 'my-hero-detail',
   templateUrl: 'hero-detail.component.html',
-  styleUrls: ['hero-detail.component.css']
+  styleUrls: [ 'hero-detail.component.css' ]
 })
 export class HeroDetailComponent implements OnInit {
   @Input() hero: Hero;
@@ -15,15 +14,14 @@ export class HeroDetailComponent implements OnInit {
   error: any;
   navigated = false; // true if navigated here
 
-  constructor(
-    private heroService: HeroService,
-    private route: ActivatedRoute) {
+  constructor(private heroService: HeroService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
     this.route.params.forEach((params: Params) => {
-      if (params['id'] !== undefined) {
-        let id = +params['id'];
+      if (params[ 'id' ] !== undefined) {
+        let id = +params[ 'id' ];
         this.navigated = true;
         this.heroService.getHero(id)
           .then(hero => this.hero = hero);
@@ -35,9 +33,11 @@ export class HeroDetailComponent implements OnInit {
   }
 
   save(): void {
+    debugger
     this.heroService
       .save(this.hero)
       .then(hero => {
+        debugger
         this.hero = hero; // saved hero, w/ id if new
         this.goBack(hero);
       })
@@ -46,6 +46,8 @@ export class HeroDetailComponent implements OnInit {
 
   goBack(savedHero: Hero = null): void {
     this.close.emit(savedHero);
-    if (this.navigated) { window.history.back(); }
+    if (this.navigated) {
+      window.history.back();
+    }
   }
 }
