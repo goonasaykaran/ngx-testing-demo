@@ -8,7 +8,6 @@ import { BaseRequestOptions, Http } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { Hero } from '../hero';
 import { Observable } from 'rxjs';
-import { Mock } from 'protractor/built/driverProviders';
 
 let MockHero: Hero = <Hero>{id: 1, name: 'Superman'};
 
