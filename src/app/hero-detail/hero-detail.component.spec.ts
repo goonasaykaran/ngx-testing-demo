@@ -8,6 +8,7 @@ import { BaseRequestOptions, Http } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { Hero } from '../hero';
 import { Observable } from 'rxjs';
+import { Mock } from 'protractor/built/driverProviders';
 
 let MockHero: Hero = <Hero>{id: 1, name: 'Superman'};
 
@@ -48,6 +49,19 @@ describe('Component: HeroDetail', () => {
     }));
 
   describe('Functional: ', () => {
+    it('should call emit with hero when goBack is called with a hero', () => {
+      heroDetailComponent.hero = MockHero;
+      spyOn(heroDetailComponent.close, 'emit');
+      spyOn(window.history, 'back');
+
+      heroDetailComponent.goBack(MockHero);
+
+      expect(heroDetailComponent.close.emit).toHaveBeenCalled();
+      expect(heroDetailComponent.close.emit).toHaveBeenCalledWith(MockHero);
+      expect(heroDetailComponent.close.emit).toHaveBeenCalledTimes(1);
+      expect(window.history.back).not.toHaveBeenCalled();
+    });
+
     it('should emit close without saved hero when goBack is called directly', () => {
       spyOn(heroDetailComponent.close, 'emit');
       spyOn(window.history, 'back');
