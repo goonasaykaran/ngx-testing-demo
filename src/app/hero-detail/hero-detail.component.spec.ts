@@ -59,30 +59,40 @@ describe('Component: HeroDetail', () => {
       expect(window.history.back).not.toHaveBeenCalled();
     });
 
-    //THIS SHOULD WORK
     it('should attempt to save the hero when save is called and navigate to hero when save successful', (done) => {
       heroDetailComponent.hero = MockHero;
       spyOn(heroDetailComponent, 'goBack');
       spyOn(heroService, 'save').and.callFake(() => {
-        return new Promise((resolve, reject) => {
-          resolve(MockHero);
-          done();
-        }).;
+        return Promise.resolve(MockHero);
       });
 
-      heroDetailComponent.save();
-
-      expect(heroService.save).toHaveBeenCalled();
-      expect(heroService.save).toHaveBeenCalledTimes(1);
-      expect(heroService.save).toHaveBeenCalledWith(MockHero);
-      expect(heroDetailComponent.hero).toEqual(MockHero);
-      expect(heroDetailComponent.goBack).toHaveBeenCalled();
-      expect(heroDetailComponent.goBack).toHaveBeenCalledTimes(1);
-      expect(heroDetailComponent.goBack).toHaveBeenCalledWith(MockHero);
+      heroDetailComponent.save().then(() => {
+        expect(heroService.save).toHaveBeenCalled();
+        expect(heroService.save).toHaveBeenCalledTimes(1);
+        expect(heroService.save).toHaveBeenCalledWith(MockHero);
+        expect(heroDetailComponent.hero).toEqual(MockHero);
+        expect(heroDetailComponent.goBack).toHaveBeenCalled();
+        expect(heroDetailComponent.goBack).toHaveBeenCalledTimes(1);
+        expect(heroDetailComponent.goBack).toHaveBeenCalledWith(MockHero);
+        done();
+      });
     });
 
-    it('should attempt to save the hero when save is called and display error when save errors', () => {
+    it('should attempt to save the hero when save is called and display error when save errors', (done) => {
+      heroDetailComponent.hero = MockHero;
+      spyOn(heroDetailComponent, 'goBack');
+      spyOn(heroService, 'save').and.callFake(() => {
+        return Promise.reject('Some Error');
+      });
 
+      heroDetailComponent.save().then(() => {
+        expect(heroService.save).toHaveBeenCalled();
+        expect(heroService.save).toHaveBeenCalledTimes(1);
+        expect(heroService.save).toHaveBeenCalledWith(MockHero);
+        expect(heroDetailComponent.hero).toEqual(MockHero);
+        expect(heroDetailComponent.goBack).not.toHaveBeenCalled();
+        done();
+      });
     });
 
     it('should emit close without saved hero when goBack is called directly and go back when navigated is true', () => {

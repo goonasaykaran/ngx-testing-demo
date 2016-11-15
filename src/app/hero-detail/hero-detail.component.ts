@@ -32,12 +32,10 @@ export class HeroDetailComponent implements OnInit {
     });
   }
 
-  save(): void {
-    debugger
-    this.heroService
+  save() {
+    return this.heroService
       .save(this.hero)
       .then(hero => {
-        debugger
         this.hero = hero; // saved hero, w/ id if new
         this.goBack(hero);
       })
