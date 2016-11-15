@@ -18,8 +18,8 @@ export class HeroesComponent implements OnInit {
               private router: Router) {
   }
 
-  getHeroes(): void {
-    this.heroService
+  getHeroes(): Promise<any> {
+    return this.heroService
       .getHeroes()
       .then(heroes => this.heroes = heroes)
       .catch(error => this.error = error);
@@ -37,12 +37,12 @@ export class HeroesComponent implements OnInit {
     }
   }
 
-  deleteHero(hero: Hero, event: any): void {
+  deleteHero(hero: Hero, event: any): Promise<any> {
     event.stopPropagation();
-    this.heroService
+    return this.heroService
       .delete(hero)
-      .then(res => {
-        this.heroes = this.heroes.filter(h => h !== hero);
+      .then(() => {
+        this.heroes = this.heroes.filter((indexHero: Hero) => indexHero !== hero);
         if (this.selectedHero === hero) {
           this.selectedHero = null;
         }

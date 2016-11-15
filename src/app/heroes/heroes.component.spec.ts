@@ -12,7 +12,11 @@ import { Hero } from '../hero';
 let MockHero: Hero = <Hero>{id: 1, name: 'Superman'};
 let MockHero2: Hero = <Hero>{id: 2, name: 'IronMan'};
 let MockHeroesArray: Array<Hero> = [ MockHero, MockHero2 ];
-
+let MockEvent: any = {
+  stopPropagation: function () {
+    return;
+  }
+};
 describe('Component: HeroSearch', () => {
   let elementFixture: ComponentFixture<HeroesComponent>;
   let heroService: HeroService;
@@ -50,12 +54,84 @@ describe('Component: HeroSearch', () => {
       mockBackend = mb;
     }));
   describe('Functional: ', () => {
-    // TODO: Need to figure out how to test this
-    // it('should call the hero service and set heroes to successful fetch', () => {
-    //   heroSearchComponent.getHeroes();
-    //
-    //   expect(heroSearchComponent.heroes).toBe(MockHeroesArray);
-    // });
+    it('should call getHeroes and set heroes to the returned object', (done) => {
+      spyOn(heroService, 'getHeroes').and.callFake(() => {
+        return Promise.resolve(MockHeroesArray);
+      });
+
+      heroSearchComponent.getHeroes().then(() => {
+        expect(heroService.getHeroes).toHaveBeenCalled();
+        expect(heroService.getHeroes).toHaveBeenCalledTimes(1);
+        expect(heroSearchComponent.heroes).toBe(MockHeroesArray);
+        done();
+      });
+    });
+
+    it('should call getHeroes and set heroes to the returned object', (done) => {
+      const errorMsg = 'Some error';
+      spyOn(heroService, 'getHeroes').and.callFake(() => {
+        return Promise.reject(errorMsg);
+      });
+      heroSearchComponent.getHeroes().then(() => {
+        expect(heroService.getHeroes).toHaveBeenCalled();
+        expect(heroService.getHeroes).toHaveBeenCalledTimes(1);
+        expect(heroSearchComponent.error).toBe(errorMsg);
+        done();
+      });
+    });
+
+    it('should call deleteHeroes and delete hero from hero\'s array and set selected to ' +
+      'null when the hero passed was the selected hero', (done) => {
+      const errorMsg = 'Some error';
+      spyOn(heroService, 'delete').and.callFake(() => {
+        return Promise.resolve(errorMsg);
+      });
+      heroSearchComponent.heroes = MockHeroesArray;
+      heroSearchComponent.selectedHero = MockHero;
+      heroSearchComponent.deleteHero(MockHero, MockEvent).then(() => {
+        expect(heroService.delete).toHaveBeenCalled();
+        expect(heroService.delete).toHaveBeenCalledTimes(1);
+        expect(heroService.delete).toHaveBeenCalledWith(MockHero);
+        expect(heroSearchComponent.heroes).toEqual([ MockHero2 ]);
+        expect(heroSearchComponent.selectedHero).toBeNull();
+        done();
+      });
+    });
+
+    it('should call deleteHeroes and delete hero from hero\'s array and not set selected to ' +
+      'null when the hero passed was different than selected hero', (done) => {
+      const errorMsg = 'Some error';
+      spyOn(heroService, 'delete').and.callFake(() => {
+        return Promise.resolve(errorMsg);
+      });
+      heroSearchComponent.heroes = MockHeroesArray;
+      heroSearchComponent.selectedHero = MockHero2;
+      heroSearchComponent.deleteHero(MockHero, MockEvent).then(() => {
+        expect(heroService.delete).toHaveBeenCalled();
+        expect(heroService.delete).toHaveBeenCalledTimes(1);
+        expect(heroService.delete).toHaveBeenCalledWith(MockHero);
+        expect(heroSearchComponent.heroes).toEqual([ MockHero2 ]);
+        expect(heroSearchComponent.selectedHero).toBe(MockHero2);
+        done();
+      });
+    });
+
+    it('should catch if an error is thrown at delete', (done) => {
+      const errorMsg = 'some error';
+      heroSearchComponent.heroes = MockHeroesArray;
+      spyOn(heroService, 'delete').and.callFake(() => {
+        return Promise.reject(errorMsg);
+      });
+
+      heroSearchComponent.deleteHero(MockHero, MockEvent).then(() => {
+        expect(heroService.delete).toHaveBeenCalled();
+        expect(heroService.delete).toHaveBeenCalledTimes(1);
+        expect(heroService.delete).toHaveBeenCalledWith(MockHero);
+        expect(heroSearchComponent.heroes).toEqual(MockHeroesArray);
+        expect(heroSearchComponent.error).toBe(errorMsg);
+        done();
+      });
+    });
 
     it('should switch to add hero mode and clear selected hero when addHero is called', () => {
       expect(heroSearchComponent.addingHero).toBeFalsy();
@@ -67,7 +143,17 @@ describe('Component: HeroSearch', () => {
       expect(heroSearchComponent.selectedHero).toBeNull();
     });
 
-    // TODO: Need to test calling this without hero
+
+    it('should expect not to ball getHeroes when savedHero is null', () => {
+      spyOn(heroSearchComponent, 'getHeroes');
+      heroSearchComponent.addingHero = true;
+      expect(heroSearchComponent.addingHero).toBeTruthy();
+
+      heroSearchComponent.close(null);
+      expect(heroSearchComponent.addingHero).toBeFalsy();
+      expect(heroSearchComponent.getHeroes).not.toHaveBeenCalled();
+    });
+
     it('should switch from add hero mode', () => {
       spyOn(heroSearchComponent, 'getHeroes');
       heroSearchComponent.addingHero = true;

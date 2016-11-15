@@ -32,7 +32,7 @@ export class HeroDetailComponent implements OnInit {
     });
   }
 
-  save() {
+  save(): Promise<any> {
     return this.heroService
       .save(this.hero)
       .then(hero => {

@@ -93,9 +93,10 @@ describe('Component: HeroDetail', () => {
 
     it('should attempt to save the hero when save is called and display error when save errors', (done) => {
       heroDetailComponent.hero = MockHero;
+      const errorMsg = 'Some Error';
       spyOn(heroDetailComponent, 'goBack');
       spyOn(heroService, 'save').and.callFake(() => {
-        return Promise.reject('Some Error');
+        return Promise.reject(errorMsg);
       });
 
       heroDetailComponent.save().then(() => {
@@ -104,6 +105,7 @@ describe('Component: HeroDetail', () => {
         expect(heroService.save).toHaveBeenCalledWith(MockHero);
         expect(heroDetailComponent.hero).toEqual(MockHero);
         expect(heroDetailComponent.goBack).not.toHaveBeenCalled();
+        expect(heroDetailComponent.error).toBe(errorMsg);
         done();
       });
     });
