@@ -1,16 +1,75 @@
-// /* tslint:disable:no-unused-variable */
-//
-// import { TestBed, async, inject } from '@angular/core/testing';
-// import { HeroService } from './hero.service';
-//
-// describe('Service: Hero', () => {
-//   beforeEach(() => {
-//     TestBed.configureTestingModule({
-//       providers: [HeroService]
-//     });
-//   });
-//
-//   it('should ...', inject([HeroService], (service: HeroService) => {
-//     expect(service).toBeTruthy();
-//   }));
-// });
+import { HeroService } from './hero.service';
+import { TestBed, inject } from '@angular/core/testing';
+import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
+import { MockBackend } from '@angular/http/testing';
+import { Hero } from './hero';
+import { Observable } from 'rxjs';
+
+let MockHero: Hero = <Hero>{id: 1, name: 'Superman'};
+let MockHero2: Hero = <Hero>{id: 2, name: 'IronMan'};
+let MockHeroesArray: Array<Hero> = [ MockHero, MockHero2 ];
+let mockBackend: MockBackend;
+let heroService: HeroService;
+
+describe('Service: Hero', () => {
+  it('should call handle error from the promise when getHeroes fails', (done) => {
+    setup(MockFailedGetHeroesHttp);
+    spyOn(heroService, 'handleError');
+
+    heroService.getHeroes().then(() => {
+      expect(heroService.handleError).toHaveBeenCalled();
+      done();
+    })
+  });
+
+  it('should return the heroes array from the promise when getHeroes succeeds', (done) => {
+    setup(MockSuccesGetHeroesHttp);
+    spyOn(heroService, 'handleError');
+
+    heroService.getHeroes().then((heroes) => {
+      expect(heroService.handleError).not.toHaveBeenCalled();
+      expect(heroes).toEqual(MockHeroesArray);
+      done();
+    })
+  });
+});
+
+class MockFailedGetHeroesHttp extends Http {
+  constructor(backend, options) {
+    super(backend, options)
+  }
+
+  get() {
+    return Observable.throw('error');
+  }
+}
+
+class MockSuccesGetHeroesHttp extends Http {
+  constructor(backend, options) {
+    super(backend, options)
+  }
+
+  get() {
+    return Observable.from([ new Response(new ResponseOptions({body: {data: MockHeroesArray}})) ]);
+  }
+}
+
+let setup = function (httpMock) {
+  TestBed.configureTestingModule({
+    providers: [
+      HeroService,
+      MockBackend,
+      BaseRequestOptions,
+      {
+        provide: Http,
+        useFactory: (backend: MockBackend, options: BaseRequestOptions) => new httpMock(backend, options),
+        deps: [ MockBackend, BaseRequestOptions ]
+      }
+    ]
+  });
+  inject([ MockBackend, Http ],
+    (mb: MockBackend, http: Http) => {
+      mockBackend = mb;
+      heroService = new HeroService(http);
+    })();
+};
