@@ -32,6 +32,15 @@ describe('Service: Hero', () => {
       done();
     })
   });
+
+  it('should return the hero based on passed in id from the promise when it succeeds', (done) => {
+    setup(MockSuccesGetHeroesHttp);
+
+    heroService.getHero(MockHero.id).then((hero) => {
+      expect(hero).toEqual(MockHero);
+      done();
+    })
+  });
 });
 
 class MockFailedGetHeroesHttp extends Http {
