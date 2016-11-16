@@ -1,20 +1,18 @@
-export class E2eDemoPage {
-
-  async navigateTo() {
+export class DashboardPage {
+  static async navigateTo() {
     return await browser.get('/');
   }
 
-  async getParagraphText() {
+  static async getParagraphText() {
     return await element(by.css('my-app h3')).getText();
   }
 
-  async getElementText(selector: string) {
+  static async getElementText(selector: string) {
     return await element(by.css(selector)).getText();
   }
 
-  async getHero(id: string) {
+  static async getHero(id: string) {
     await browser.driver.findElements(by.id(id));
     return await element(by.id(id)).click();
   }
-
 }
