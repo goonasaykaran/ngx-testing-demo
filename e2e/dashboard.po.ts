@@ -1,3 +1,4 @@
+import { by, element, browser } from 'protractor';
 export class DashboardPage {
   static async navigateTo() {
     return await browser.get('/');

@@ -1,3 +1,4 @@
+import { browser, by, element } from 'protractor';
 export class HeroDetailPage {
   static async navigateTo(id = 12) {
     return await browser.get(`/detail/${id}`);

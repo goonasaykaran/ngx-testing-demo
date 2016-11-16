@@ -1,4 +1,5 @@
 import { HeroDetailPage } from './hero-detail.po';
+import { browser, element, by } from 'protractor';
 
 describe('Page: Hero-Detail', () => {
   beforeEach(async() => {

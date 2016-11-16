@@ -1,4 +1,5 @@
 import { DashboardPage } from './dashboard.po';
+import { browser, by, element } from 'protractor';
 
 describe('Page: Dashboard', () => {
   beforeEach(async() => {
@@ -28,7 +29,7 @@ describe('Page: Dashboard', () => {
       input.clear();
       input.sendKeys(hero);
       await browser.driver.findElements(by.css(searchResultSelector));
-      let result = await element.all(by.css(searchResultSelector)).first();
+      let result = element.all(by.css(searchResultSelector)).first();
       await result.click();
       const elementText = await DashboardPage.getElementText(heroSelector);
       expect(elementText).toBe(`${hero} details!`);
