@@ -1,4 +1,4 @@
-# Angular2 Testing Demo
+# Angular2 Testing Demo [![CircleCI](https://circleci.com/gh/zackarychapple/ng2-testing-demo/tree/master.svg?style=svg)](https://circleci.com/gh/zackarychapple/ng2-testing-demo/tree/master)
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.20-1.
 
