@@ -23,7 +23,7 @@ describe('Service: Hero', () => {
   });
 
   it('should return the heroes array from the promise when getHeroes succeeds', (done) => {
-    setup(MockSuccesGetHeroesHttp);
+    setup(MockSuccessGetHeroesHttp);
     spyOn(heroService, 'handleError');
 
     heroService.getHeroes().then((heroes) => {
@@ -34,7 +34,7 @@ describe('Service: Hero', () => {
   });
 
   it('should return the hero based on passed in id from the promise when it succeeds', (done) => {
-    setup(MockSuccesGetHeroesHttp);
+    setup(MockSuccessGetHeroesHttp);
 
     heroService.getHero(MockHero.id).then((hero) => {
       expect(hero).toEqual(MockHero);
@@ -53,7 +53,7 @@ class MockFailedGetHeroesHttp extends Http {
   }
 }
 
-class MockSuccesGetHeroesHttp extends Http {
+class MockSuccessGetHeroesHttp extends Http {
   constructor(backend, options) {
     super(backend, options)
   }
