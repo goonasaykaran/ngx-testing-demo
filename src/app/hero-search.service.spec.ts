@@ -42,11 +42,11 @@ describe('Service: HeroSearch', () => {
       expect(connection.request.url).toEqual('app/heroes/?name=some term');
       connection.mockRespond(new Response(new ResponseOptions({
         body: {data: MockHeroesArray}
-      })))
+      })));
     });
     heroSearchService.search(searchTerm).subscribe(result => {
       expect(result).toEqual(MockHeroesArray);
       done();
-    })
-  })
+    });
+  });
 });

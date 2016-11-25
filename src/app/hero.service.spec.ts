@@ -10,59 +10,6 @@ let MockHero2: Hero = <Hero>{id: 2, name: 'IronMan'};
 let MockHeroesArray: Array<Hero> = [ MockHero, MockHero2 ];
 let mockBackend: MockBackend;
 let heroService: HeroService;
-
-describe('Service: Hero', () => {
-  it('should call handle error from the promise when getHeroes fails', (done) => {
-    setup(MockFailedGetHeroesHttp);
-    spyOn(heroService, 'handleError');
-
-    heroService.getHeroes().then(() => {
-      expect(heroService.handleError).toHaveBeenCalled();
-      done();
-    })
-  });
-
-  it('should return the heroes array from the promise when getHeroes succeeds', (done) => {
-    setup(MockSuccessGetHeroesHttp);
-    spyOn(heroService, 'handleError');
-
-    heroService.getHeroes().then((heroes) => {
-      expect(heroService.handleError).not.toHaveBeenCalled();
-      expect(heroes).toEqual(MockHeroesArray);
-      done();
-    })
-  });
-
-  it('should return the hero based on passed in id from the promise when it succeeds', (done) => {
-    setup(MockSuccessGetHeroesHttp);
-
-    heroService.getHero(MockHero.id).then((hero) => {
-      expect(hero).toEqual(MockHero);
-      done();
-    })
-  });
-});
-
-class MockFailedGetHeroesHttp extends Http {
-  constructor(backend, options) {
-    super(backend, options)
-  }
-
-  get() {
-    return Observable.throw('error');
-  }
-}
-
-class MockSuccessGetHeroesHttp extends Http {
-  constructor(backend, options) {
-    super(backend, options)
-  }
-
-  get() {
-    return Observable.from([ new Response(new ResponseOptions({body: {data: MockHeroesArray}})) ]);
-  }
-}
-
 let setup = function (httpMock) {
   TestBed.configureTestingModule({
     providers: [
@@ -82,3 +29,55 @@ let setup = function (httpMock) {
       heroService = new HeroService(http);
     })();
 };
+
+describe('Service: Hero', () => {
+  it('should call handle error from the promise when getHeroes fails', (done) => {
+    setup(MockFailedGetHeroesHttp);
+    spyOn(heroService, 'handleError');
+
+    heroService.getHeroes().then(() => {
+      expect(heroService.handleError).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should return the heroes array from the promise when getHeroes succeeds', (done) => {
+    setup(MockSuccessGetHeroesHttp);
+    spyOn(heroService, 'handleError');
+
+    heroService.getHeroes().then((heroes) => {
+      expect(heroService.handleError).not.toHaveBeenCalled();
+      expect(heroes).toEqual(MockHeroesArray);
+      done();
+    });
+  });
+
+  it('should return the hero based on passed in id from the promise when it succeeds', (done) => {
+    setup(MockSuccessGetHeroesHttp);
+
+    heroService.getHero(MockHero.id).then((hero) => {
+      expect(hero).toEqual(MockHero);
+      done();
+    });
+  });
+});
+
+class MockFailedGetHeroesHttp extends Http {
+  constructor(backend, options) {
+    super(backend, options);
+  }
+
+  get() {
+    return Observable.throw('error');
+  }
+}
+
+class MockSuccessGetHeroesHttp extends Http {
+  constructor(backend, options) {
+    super(backend, options);
+  }
+
+  get() {
+    return Observable.from([ new Response(new ResponseOptions({body: {data: MockHeroesArray}})) ]);
+  }
+}
