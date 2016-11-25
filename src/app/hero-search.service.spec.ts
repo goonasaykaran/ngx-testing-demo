@@ -1,6 +1,6 @@
 import { HeroSearchService } from './hero-search.service';
 import { TestBed, inject } from '@angular/core/testing';
-import { BaseRequestOptions, Http, RequestMethod, Response, ResponseOptions } from '@angular/http';
+import { BaseRequestOptions, Http, RequestMethod, ResponseOptions, Response } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { Hero } from './hero';
 
@@ -35,16 +35,18 @@ describe('Service: HeroSearch', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('should return observable with hero array when search is called with term', (done) => {
+  it('should return observable with hero array', (done) => {
     let searchTerm = 'some term';
     mockBackend.connections.subscribe((connection: MockConnection) => {
       expect(connection.request.method).toEqual(RequestMethod.Get);
-      expect(connection.request.url).toEqual(`app/heroes/?name=${searchTerm}`);
-      connection.mockRespond(new Response(new ResponseOptions({body: {data: MockHeroesArray}})));
+      expect(connection.request.url).toEqual('app/heroes/?name=some term');
+      connection.mockRespond(new Response(new ResponseOptions({
+        body: {data: MockHeroesArray}
+      })))
     });
     heroSearchService.search(searchTerm).subscribe(result => {
       expect(result).toEqual(MockHeroesArray);
       done();
-    });
-  });
+    })
+  })
 });
