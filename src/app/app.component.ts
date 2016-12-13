@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'my-app',
+  selector: 'app-root',
   template: `
     <h1>{{title}}</h1>
     <div class="header-bar"></div>
@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
     </nav>
     <router-outlet></router-outlet>
   `,
-  styleUrls: [ 'app.component.css' ]
+  styleUrls: [ './app.component.scss' ]
 })
 export class AppComponent {
   title = 'Tour of Heroes';
