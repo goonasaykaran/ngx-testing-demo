@@ -31,9 +31,10 @@ describe('Service: HeroSearch', () => {
       mockBackend = mb;
       heroSearchService = new HeroSearchService(http);
     }));
-  it('should ...', inject([ HeroSearchService ], (service: HeroSearchService) => {
-    expect(service).toBeTruthy();
-  }));
+
+  it('should exist', () => {
+    expect(heroSearchService).toBeTruthy();
+  });
 
   it('should return observable with hero array', (done) => {
     let searchTerm = 'some term';
