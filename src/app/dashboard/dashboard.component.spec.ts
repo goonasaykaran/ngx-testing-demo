@@ -1,14 +1,13 @@
 import { RouterTestingModule } from '@angular/router/testing';
 import { BaseRequestOptions, Http } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
-import { TestBed, ComponentFixture, inject } from '@angular/core/testing';
+import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { HeroService } from '../hero.service';
 import { FormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard.component';
-import { HeroSearchComponent } from '../hero-search/hero-search.component';
 import { Hero } from '../hero';
-import { HeroSearchService } from '../hero-search.service';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 let MockHero: Hero = <Hero>{id: 1, name: 'Superman'};
 let MockHero2: Hero = <Hero>{id: 2, name: 'Iron Man'};
@@ -19,14 +18,12 @@ let MockHeroesArray: Array<Hero> = [ MockHero, MockHero2, MockHero3, MockHero4, 
 describe('Component: HeroSearch', () => {
   let elementFixture: ComponentFixture<DashboardComponent>;
   let heroService: HeroService;
-  let mockBackend: MockBackend;
   let dashboardComponent: DashboardComponent;
   let router: Router;
-  beforeEach(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [
         HeroService,
-        HeroSearchService,
         MockBackend,
         BaseRequestOptions,
         {
@@ -36,23 +33,22 @@ describe('Component: HeroSearch', () => {
         }
       ],
       declarations: [
-        DashboardComponent,
-        HeroSearchComponent
+        DashboardComponent
       ],
       imports: [
         FormsModule,
         RouterTestingModule
-      ]
-    });
-    elementFixture = TestBed.createComponent(DashboardComponent);
-  });
-  beforeEach(inject([ HeroService, MockBackend, Router ],
-    (hs: HeroService, mb: MockBackend, r: Router) => {
-      heroService = hs;
-      router = r;
-      dashboardComponent = new DashboardComponent(hs, r);
-      mockBackend = mb;
-    }));
+      ],
+      schemas: [ NO_ERRORS_SCHEMA ]
+    })
+      .compileComponents()
+      .then(() => {
+        elementFixture = TestBed.createComponent(DashboardComponent);
+        dashboardComponent = elementFixture.componentInstance;
+        heroService = TestBed.get(HeroService);
+        router = TestBed.get(Router);
+      });
+  }));
   describe('Functional: ', () => {
     it('should go to link for hero based on hero.id passed in', () => {
       spyOn(router, 'navigate');
