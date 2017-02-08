@@ -10,6 +10,7 @@ import { AppRoutingModule, routedComponents } from './app-routing.module';
 import { HeroService } from './hero.service';
 import { HeroSearchComponent } from './hero-search/hero-search.component';
 import { HeroSearchService } from './hero-search.service';
+import { MaterialModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { HeroSearchService } from './hero-search.service';
     FormsModule,
     AppRoutingModule,
     HttpModule,
+    MaterialModule.forRoot(),
     InMemoryWebApiModule.forRoot(InMemoryDataService, {delay: 600})
   ],
   declarations: [
