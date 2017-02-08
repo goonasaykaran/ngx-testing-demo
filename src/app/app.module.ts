@@ -11,6 +11,11 @@ import { HeroService } from './hero.service';
 import { HeroSearchComponent } from './hero-search/hero-search.component';
 import { HeroSearchService } from './hero-search.service';
 import { MaterialModule } from '@angular/material';
+import { LoginComponent } from './login/login.component';
+import { UserAuthentication } from './user-authentication.service';
+import { ShellComponent } from './shell/shell.component';
+import { LoadingComponent } from './loading/loading.component';
+import { LoadingStatusService } from './loading-status.service';
 
 @NgModule({
   imports: [
@@ -24,11 +29,16 @@ import { MaterialModule } from '@angular/material';
   declarations: [
     AppComponent,
     HeroSearchComponent,
-    routedComponents
+    routedComponents,
+    LoginComponent,
+    ShellComponent,
+    LoadingComponent
   ],
   providers: [
     HeroService,
-    HeroSearchService
+    HeroSearchService,
+    UserAuthentication,
+    LoadingStatusService
   ],
   bootstrap: [ AppComponent ]
 })

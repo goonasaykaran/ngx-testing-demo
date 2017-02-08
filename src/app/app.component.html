@@ -1,10 +1,4 @@
-<span (click)="sidenav.open()"><i class="fa fa-bars"></i></span><h1>{{title}}</h1>
-<md-sidenav-container class="example-container">
-  <md-sidenav #sidenav class="example-sidenav">
-    <a routerLink="/dashboard" (click)="sidenav.close()" routerLinkActive="active">Dashboard</a>
-    <a routerLink="/heroes" (click)="sidenav.close()" routerLinkActive="active">Heroes</a>
-  </md-sidenav>
-  <div class="example-sidenav-content">
-    <router-outlet></router-outlet>
-  </div>
-</md-sidenav-container>
+<app-loading [hidden]="!isLoading"></app-loading>
+<div [hidden]="isLoading" class="body-content">
+  <router-outlet></router-outlet>
+</div>

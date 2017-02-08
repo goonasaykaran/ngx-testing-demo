@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LoadingStatusService } from './loading-status.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: [ './app.component.scss' ]
 })
 export class AppComponent {
-  title = 'Tour of Heroes';
+  isLoading: boolean = false;
+
+  constructor(private loadingStatusService: LoadingStatusService) {
+    loadingStatusService.isLoading$.subscribe((loadingStatus: boolean) => {
+      this.isLoading = loadingStatus;
+    });
+  }
 }
