@@ -1,25 +1,38 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Http, BaseRequestOptions } from '@angular/http';
-import { MockBackend } from '@angular/http/testing';
+import { LoadingStatusService } from './loading-status.service';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('App: ng2-testing-demo', () => {
-  beforeEach(() => {
+  let loadingStatus: LoadingStatusService;
+  let fixture: ComponentFixture<AppComponent>;
+  let component: AppComponent;
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [
-        {
-          provide: Http,
-          useFactory: (backend: MockBackend, options: BaseRequestOptions) => new Http(backend, options),
-          deps: [ MockBackend, BaseRequestOptions ]
-        }
+        LoadingStatusService
       ],
       declarations: [
         AppComponent
       ],
-      imports: [
-        RouterTestingModule
-      ]
+      schemas: [ NO_ERRORS_SCHEMA ]
+    })
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(AppComponent);
+        component = fixture.componentInstance;
+        loadingStatus = TestBed.get(LoadingStatusService);
+        fixture.detectChanges();
+      });
+  }));
+
+  describe('updates loading status for app when status service updates', () => {
+    it('sets loading to true when loading status observable updates', () => {
+      expect(component.isLoading).toBeFalsy();
+
+      loadingStatus.startLoading();
+
+      expect(component.isLoading).toBeTruthy();
     });
   });
 });
