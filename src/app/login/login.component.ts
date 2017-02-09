@@ -15,7 +15,7 @@ export class LoginComponent {
     setTimeout(() => {
       UserAuthentication.loggedIn = true;
       this.router.navigate([ 'dashboard' ]);
-    }, 1500);
+    }, 500);
   }
 
   constructor(private router: Router, private loadingService: LoadingStatusService) {
