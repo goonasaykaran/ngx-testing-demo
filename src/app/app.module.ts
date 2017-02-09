@@ -6,7 +6,7 @@ import { InMemoryWebApiModule } from 'angular-in-memory-web-api/in-memory-web-ap
 import { InMemoryDataService } from './in-memory-data.service';
 import './rxjs-extensions';
 import { AppComponent } from './app.component';
-import { AppRoutingModule, routedComponents } from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { HeroService } from './hero.service';
 import { HeroSearchComponent } from './hero-search/hero-search.component';
 import { HeroSearchService } from './hero-search.service';
@@ -16,6 +16,9 @@ import { UserAuthentication } from './user-authentication.service';
 import { ShellComponent } from './shell/shell.component';
 import { LoadingComponent } from './loading/loading.component';
 import { LoadingStatusService } from './loading-status.service';
+import { HeroDetailComponent } from './hero-detail/hero-detail.component';
+import { HeroesComponent } from './heroes/heroes.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   imports: [
@@ -29,7 +32,9 @@ import { LoadingStatusService } from './loading-status.service';
   declarations: [
     AppComponent,
     HeroSearchComponent,
-    routedComponents,
+    DashboardComponent,
+    HeroesComponent,
+    HeroDetailComponent,
     LoginComponent,
     ShellComponent,
     LoadingComponent

@@ -45,5 +45,3 @@ const routes: Routes = [
 })
 export class AppRoutingModule {
 }
-
-export const routedComponents = [ DashboardComponent, HeroesComponent, HeroDetailComponent ];
