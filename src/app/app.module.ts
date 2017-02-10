@@ -27,7 +27,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     AppRoutingModule,
     HttpModule,
     MaterialModule.forRoot(),
-    InMemoryWebApiModule.forRoot(InMemoryDataService, {delay: 600})
+    InMemoryWebApiModule.forRoot(InMemoryDataService, {delay: 200})
   ],
   declarations: [
     AppComponent,

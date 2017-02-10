@@ -1,4 +1,3 @@
-import { RouterTestingModule } from '@angular/router/testing';
 import { BaseRequestOptions, Http } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 import { TestBed, ComponentFixture, async } from '@angular/core/testing';
