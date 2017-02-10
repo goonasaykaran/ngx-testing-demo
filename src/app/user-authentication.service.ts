@@ -4,7 +4,7 @@ import { LoadingStatusService } from './loading-status.service';
 
 @Injectable()
 export class UserAuthentication implements CanActivate {
-  static loggedIn: boolean = false;
+  static loggedIn = false;
 
   constructor(private router: Router, private loadingStatusService: LoadingStatusService) {
   }
