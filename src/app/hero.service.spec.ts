@@ -10,7 +10,7 @@ let MockHero2: Hero = <Hero>{id: 2, name: 'IronMan'};
 let MockHeroesArray: Array<Hero> = [ MockHero, MockHero2 ];
 let mockBackend: MockBackend;
 let heroService: HeroService;
-let setup = function (httpMock) {
+let setup = (httpMock) => {
   TestBed.configureTestingModule({
     providers: [
       HeroService,

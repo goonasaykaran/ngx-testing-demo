@@ -12,14 +12,12 @@ describe('ShellComponent', () => {
       declarations: [ ShellComponent ],
       schemas: [ NO_ERRORS_SCHEMA ]
     })
-      .compileComponents();
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(ShellComponent);
+        component = fixture.componentInstance;
+      });
   }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ShellComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
   it('should create', () => {
     expect(component).toBeTruthy();

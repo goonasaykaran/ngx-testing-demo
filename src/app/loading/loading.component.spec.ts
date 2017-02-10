@@ -1,8 +1,4 @@
-/* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
 import { LoadingComponent } from './loading.component';
 
 describe('LoadingComponent', () => {
@@ -13,14 +9,12 @@ describe('LoadingComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ LoadingComponent ]
     })
-    .compileComponents();
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(LoadingComponent);
+        component = fixture.componentInstance;
+      });
   }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(LoadingComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
   it('should create', () => {
     expect(component).toBeTruthy();

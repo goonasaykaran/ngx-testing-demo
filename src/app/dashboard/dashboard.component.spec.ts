@@ -30,14 +30,19 @@ describe('Component: HeroSearch', () => {
           provide: Http,
           useFactory: (backend: MockBackend, options: BaseRequestOptions) => new Http(backend, options),
           deps: [ MockBackend, BaseRequestOptions ]
+        },
+        {
+          provide: Router,
+          useClass: class {
+            navigate = jasmine.createSpy('navigate');
+          }
         }
       ],
       declarations: [
         DashboardComponent
       ],
       imports: [
-        FormsModule,
-        RouterTestingModule
+        FormsModule
       ],
       schemas: [ NO_ERRORS_SCHEMA ]
     })
@@ -51,8 +56,6 @@ describe('Component: HeroSearch', () => {
   }));
   describe('Functional: ', () => {
     it('should go to link for hero based on hero.id passed in', () => {
-      spyOn(router, 'navigate');
-
       dashboardComponent.gotoDetail(MockHero);
 
       expect(router.navigate).toHaveBeenCalled();

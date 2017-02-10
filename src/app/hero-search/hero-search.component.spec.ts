@@ -2,7 +2,7 @@ import { HeroSearchComponent } from './hero-search.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BaseRequestOptions, Http } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
-import { TestBed, ComponentFixture, inject } from '@angular/core/testing';
+import { TestBed, ComponentFixture, inject, async } from '@angular/core/testing';
 import { HeroSearchService } from '../hero-search.service';
 import { Hero } from '../hero';
 import { Router } from '@angular/router';
@@ -28,12 +28,11 @@ let MockHeroArray = <Array<Hero>>[
 ];
 
 describe('Component: HeroSearch', () => {
-  let elementFixture: ComponentFixture<HeroSearchComponent>;
+  let fixture: ComponentFixture<HeroSearchComponent>;
   let heroSearchService: HeroSearchService;
-  let mockBackend: MockBackend;
   let heroSearchComponent: HeroSearchComponent;
   let router: Router;
-  beforeEach(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [
         {
@@ -57,16 +56,15 @@ describe('Component: HeroSearch', () => {
       imports: [
         RouterTestingModule
       ]
-    });
-    elementFixture = TestBed.createComponent(HeroSearchComponent);
-  });
-  beforeEach(inject([ HeroSearchService, MockBackend, Router ],
-    (hss: HeroSearchService, mb: MockBackend, r: Router) => {
-      router = r;
-      heroSearchService = hss;
-      heroSearchComponent = new HeroSearchComponent(hss, r);
-      mockBackend = mb;
-    }));
+    })
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(HeroSearchComponent);
+        heroSearchComponent = fixture.componentInstance;
+        router = TestBed.get(Router);
+        heroSearchService = TestBed.get(HeroSearchService);
+      });
+  }));
   describe('Functional', () => {
     it('should update the searchTerms observable with the searched value when called', () => {
       let myTerm = 'some search term';
@@ -86,11 +84,11 @@ describe('Component: HeroSearch', () => {
   });
   describe('Structural', () => {
     it('should have 4 heroes in the results when heroes attribute has 4 in the array', () => {
-      spyOn(elementFixture.componentInstance, 'ngOnInit').and.callFake(() => {
+      spyOn(fixture.componentInstance, 'ngOnInit').and.callFake(() => {
       });
-      elementFixture.componentInstance.heroes = Observable.of(MockHeroArray);
-      elementFixture.detectChanges();
-      const renderedElement = elementFixture.nativeElement;
+      fixture.componentInstance.heroes = Observable.of(MockHeroArray);
+      fixture.detectChanges();
+      const renderedElement = fixture.nativeElement;
       expect(renderedElement.querySelectorAll('.search-result').length).toBe(MockHeroArray.length);
     });
   });

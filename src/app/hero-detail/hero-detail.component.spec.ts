@@ -2,7 +2,7 @@ import { HeroDetailComponent } from './hero-detail.component';
 import { ActivatedRoute } from '@angular/router';
 import { HeroService } from '../hero.service';
 import { MockBackend } from '@angular/http/testing';
-import { inject, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BaseRequestOptions, Http } from '@angular/http';
 import { FormsModule } from '@angular/forms';
@@ -12,12 +12,11 @@ import { Observable } from 'rxjs';
 let MockHero: Hero = <Hero>{id: 1, name: 'Superman'};
 
 describe('Component: HeroDetail', () => {
-  let elementFixture: ComponentFixture<HeroDetailComponent>;
+  let fixture: ComponentFixture<HeroDetailComponent>;
   let heroService: HeroService;
-  let mockBackend: MockBackend;
   let heroDetailComponent: HeroDetailComponent;
   let activatedRoute: ActivatedRoute;
-  beforeEach(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [
         HeroService,
@@ -36,16 +35,15 @@ describe('Component: HeroDetail', () => {
         FormsModule,
         RouterTestingModule
       ]
-    });
-    elementFixture = TestBed.createComponent(HeroDetailComponent);
-  });
-  beforeEach(inject([ HeroService, MockBackend, ActivatedRoute ],
-    (hs: HeroService, mb: MockBackend, ar: ActivatedRoute) => {
-      heroService = hs;
-      activatedRoute = ar;
-      heroDetailComponent = new HeroDetailComponent(hs, ar);
-      mockBackend = mb;
-    }));
+    })
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(HeroDetailComponent);
+        heroDetailComponent = fixture.componentInstance;
+        heroService = TestBed.get(HeroService);
+        activatedRoute = TestBed.get(ActivatedRoute);
+      });
+  }));
 
   describe('Functional: ', () => {
     it('should call emit with hero when goBack is called with a hero', () => {

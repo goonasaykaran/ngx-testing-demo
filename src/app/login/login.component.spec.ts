@@ -29,7 +29,6 @@ describe('LoginComponent', () => {
         component = fixture.componentInstance;
         loadingStatus = TestBed.get(LoadingStatusService);
         router = TestBed.get(Router);
-        fixture.detectChanges();
       });
   }));
 
