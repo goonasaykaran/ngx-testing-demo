@@ -7,7 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { UserAuthentication } from './user-authentication.service';
 import { ShellComponent } from './shell/shell.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
@@ -36,7 +36,6 @@ const routes: Routes = [
       }
     ]
   }
-
 ];
 
 @NgModule({
