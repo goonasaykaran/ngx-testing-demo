@@ -7,12 +7,12 @@ describe('Page: Dashboard', () => {
   });
 
   it('should display message saying Top Heroes', async() => {
-    expect(DashboardPage.getParagraphText()).toEqual('Top Heroes');
+    expect(await DashboardPage.getParagraphText()).toEqual('Top Heroes');
   });
 
   describe('Navigation: ', async() => {
     const hero = 'Narco';
-    const heroSelector = 'my-hero-detail h2';
+    const heroSelector = 'app-hero-detail h2';
     const searchSelector = 'search-box';
     const searchResultSelector = '.search-result';
 

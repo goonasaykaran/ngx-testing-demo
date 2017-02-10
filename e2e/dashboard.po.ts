@@ -1,11 +1,13 @@
 import { by, element, browser } from 'protractor';
+import { LoginPage } from './login.po';
 export class DashboardPage {
   static async navigateTo() {
-    return await browser.get('/');
+    await LoginPage.navigateTo();
+    return await LoginPage.login();
   }
 
   static async getParagraphText() {
-    return await element(by.css('my-app h3')).getText();
+    return await element(by.css('app-root h3')).getText();
   }
 
   static async getElementText(selector: string) {
