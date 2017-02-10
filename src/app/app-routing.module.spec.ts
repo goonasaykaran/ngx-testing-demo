@@ -33,21 +33,21 @@ describe('app-routing module', () => {
       });
     });
     it('allows access to dashboard', fakeAsync(inject([ Router, Location ], (router: Router, location: Location) => {
-      const fixture = TestBed.createComponent(RootCmp);
+      const fixture = TestBed.createComponent(RootComponent);
       router.resetConfig(routes);
       router.navigate([ 'dashboard' ]);
       advance(fixture);
       expect(location.path()).toEqual('/dashboard');
     })));
     it('allows access to detail with ID', fakeAsync(inject([ Router, Location ], (router: Router, location: Location) => {
-      const fixture = TestBed.createComponent(RootCmp);
+      const fixture = TestBed.createComponent(RootComponent);
       router.resetConfig(routes);
       router.navigate([ 'detail', '123' ]);
       advance(fixture);
       expect(location.path()).toEqual('/detail/123');
     })));
     it('allows access to heroes', fakeAsync(inject([ Router, Location ], (router: Router, location: Location) => {
-      const fixture = TestBed.createComponent(RootCmp);
+      const fixture = TestBed.createComponent(RootComponent);
       router.resetConfig(routes);
       router.navigate([ 'heroes' ]);
       advance(fixture);
@@ -66,21 +66,21 @@ describe('app-routing module', () => {
       });
     });
     it('blocks access to dashboard', fakeAsync(inject([ Router, Location ], (r: Router, location: Location) => {
-      const fixture = TestBed.createComponent(RootCmp);
+      const fixture = TestBed.createComponent(RootComponent);
       r.resetConfig(routes);
       r.navigate([ 'dashboard' ]);
       advance(fixture);
       expect(location.path()).toEqual('/login');
     })));
     it('blocks access to detail', fakeAsync(inject([ Router, Location ], (r: Router, location: Location) => {
-      const fixture = TestBed.createComponent(RootCmp);
+      const fixture = TestBed.createComponent(RootComponent);
       r.resetConfig(routes);
       r.navigate([ 'detail', '123' ]);
       advance(fixture);
       expect(location.path()).toEqual('/login');
     })));
     it('blocks access to heroes', fakeAsync(inject([ Router, Location ], (r: Router, location: Location) => {
-      const fixture = TestBed.createComponent(RootCmp);
+      const fixture = TestBed.createComponent(RootComponent);
       r.resetConfig(routes);
       r.navigate([ 'heroes' ]);
       advance(fixture);
@@ -89,12 +89,12 @@ describe('app-routing module', () => {
   });
 });
 
-@Component({selector: 'simple-cmp', template: `simple`})
-class SimpleCmp {
+@Component({selector: 'app-simple-cmp', template: `simple`})
+class SimpleComponent {
 }
 
-@Component({selector: 'root-cmp', template: `<router-outlet></router-outlet>`})
-class RootCmp {
+@Component({selector: 'app-root-cmp', template: `<router-outlet></router-outlet>`})
+class RootComponent {
 }
 
 function advance(fixture: ComponentFixture<any>): void {
@@ -105,16 +105,16 @@ function advance(fixture: ComponentFixture<any>): void {
 @NgModule({
   imports: [ RouterTestingModule, CommonModule, RouterTestingModule.withRoutes([ {
     path: 'simple',
-    component: SimpleCmp
+    component: SimpleComponent
   } ]) ],
   entryComponents: [
-    SimpleCmp,
+    SimpleComponent,
     ShellComponent,
     HeroDetailComponent,
     HeroesComponent,
     LoginComponent,
     DashboardComponent,
-    RootCmp
+    RootComponent
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   providers: [
@@ -127,13 +127,13 @@ function advance(fixture: ComponentFixture<any>): void {
     }
   ],
   exports: [
-    SimpleCmp,
-    RootCmp
+    SimpleComponent,
+    RootComponent
   ],
   declarations: [
     ShellComponent, DashboardComponent, LoginComponent, HeroesComponent, HeroDetailComponent,
-    SimpleCmp,
-    RootCmp
+    SimpleComponent,
+    RootComponent
   ]
 })
 class AppRoutingTestingModule {
