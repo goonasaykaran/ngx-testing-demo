@@ -2,7 +2,7 @@ import { HeroSearchComponent } from './hero-search.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BaseRequestOptions, Http } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
-import { TestBed, ComponentFixture, inject, async } from '@angular/core/testing';
+import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { HeroSearchService } from '../hero-search.service';
 import { Hero } from '../hero';
 import { Router } from '@angular/router';
