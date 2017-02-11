@@ -109,12 +109,12 @@ function advance(fixture: ComponentFixture<any>): void {
   } ]) ],
   entryComponents: [
     SimpleComponent,
+    RootComponent,
+    DashboardComponent,
     ShellComponent,
     HeroDetailComponent,
     HeroesComponent,
-    LoginComponent,
-    DashboardComponent,
-    RootComponent
+    LoginComponent
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   providers: [
